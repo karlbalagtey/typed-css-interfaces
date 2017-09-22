@@ -1,6 +1,6 @@
 {
   "name": "typed-css-interfaces",
-  "version": "0.0.1",
+  "version": "0.0.3",
   "description": "Creates .d.ts files with interface definitions from .css files",
   "main": "index.js",
   "scripts": {

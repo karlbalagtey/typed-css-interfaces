@@ -72,8 +72,8 @@ class DtsContent {
 				'interface Styles {',
 				'[name:string]:string;'
 			];
-			fileContent.concat(this.formatted);
-			fileContent.concat([
+			fileContent = fileContent.concat(this.formatted);
+			fileContent = fileContent.concat([
 				'}',
 				'declare var styles:Styles;',
 				'export = styles;'
