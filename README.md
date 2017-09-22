@@ -31,6 +31,7 @@ let var = 'style-' + name;
 console.log(`<div class="${styles[var]}"></div>`);
 ```
 You will get a TS error about no index signature.
+
 To get around this, this project generates the following output:
 
 ```ts
@@ -55,6 +56,7 @@ npm install -g typed-css-interfaces
 To maintain backwards compatibility with `typed-css-modules`, this project uses the command `tcmi`
 
 Exec `tcmi <input directory>`.
+
 For example, if you have .css files under `src` directory, exec the following:
 
 ```sh
@@ -90,6 +92,7 @@ tcmi -o dist src
 #### file name pattern
 
 By the default, this tool searches `**/*.css` files under `<input directory>`.
+
 If you can customize glob pattern, you can use `--pattern` or `-p` option.
 
 ```sh
