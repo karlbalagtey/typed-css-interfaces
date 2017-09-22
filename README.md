@@ -1,6 +1,7 @@
 # typed-css-interfaces
 
 Creates TypeScript definition files with interfaces from  .css files.
+
 This is a fork of typed-css-modules with added interface support.
 
 Given the following CSS:
