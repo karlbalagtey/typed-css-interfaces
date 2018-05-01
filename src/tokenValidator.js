@@ -12,18 +12,21 @@ export class TokenValidator {
     }
     if(!/^[$_a-zA-Z][0-9a-zA-Z$_]*$/.test(key)) {
       return {
-        isValid: false,
-        message: key + ' is not valid TypeScript variable name.'
+        isValid: true,
+        message: key + ' is not valid TypeScript variable name.',
+        needsQuotes: true
       };
     }
     if(RESERVED_WORDS.some(w => w === key)) {
       return {
-        isValid: false,
-        message: key + ' is TypeScript reserved word.'
+        isValid: true,
+        message: key + ' is TypeScript reserved word.',
+        needsQuotes: true
       };
     }
     return {
-      isValid: true
+      isValid: true,
+      needsQuotes: false
     };
   }
 }

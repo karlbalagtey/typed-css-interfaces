@@ -69,13 +69,13 @@ class DtsContent {
 		}
 		return new Promise((resolve, reject) => {
 			let fileContent = [
-				'interface Styles {',
-				'[name:string]:string;'
+				'interface IStyles {',
+				"\t" + '[name:string]:string;'
 			];
-			fileContent = fileContent.concat(this.formatted);
+			fileContent = fileContent.concat("\t" + this.formatted);
 			fileContent = fileContent.concat([
 				'}',
-				'declare var styles:Styles;',
+				'declare var styles: IStyles;',
 				'export = styles;'
 			]);
 			fs.writeFile(this.outputFilePath, fileContent.join(os.EOL) + os.EOL, 'utf8', (err) => {
@@ -126,7 +126,12 @@ export class DtsCreator {
 						const convertedKey = convertKey(key);
 						var ret = validator.validate(convertedKey);
 						if(ret.isValid) {
-							validKeys.push(convertedKey);
+							if(ret.needsQuotes) {
+								validKeys.push("'" + convertedKey + "'");
+								messageList.push(ret.message + " Adding quotes");
+							} else {
+                validKeys.push(convertedKey);
+							}
 						} else {
 							messageList.push(ret.message);
 						}
