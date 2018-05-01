@@ -48,6 +48,10 @@ export styles;
 
 The `[name:string]: string` is the important part - it defines an index signature that allows Typescript to validate dynamically declared styles.
 
+## Invalid and Reserved Names
+These are now quoted and added to the interface block, rather than ignored.  
+For example, `.MyClass--Modifier` will be added as `'.MyClass--Modifier'`  
+
 ## CLI
 
 ```sh
