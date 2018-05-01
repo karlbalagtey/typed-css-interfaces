@@ -70,9 +70,9 @@ class DtsContent {
 		return new Promise((resolve, reject) => {
 			let fileContent = [
 				'interface IStyles {',
-				"\t" + '[name:string]:string;'
+				'[name:string]: string;'
 			];
-			fileContent = fileContent.concat("\t" + this.formatted);
+			fileContent = fileContent.concat(this.formatted);
 			fileContent = fileContent.concat([
 				'}',
 				'declare var styles: IStyles;',
