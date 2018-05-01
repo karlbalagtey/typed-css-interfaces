@@ -28,7 +28,9 @@ class DtsContent {
 		rInputPath,
 		rawTokenList,
 		resultList,
-		messageList
+		messageList,
+    lineIndent,
+    lineEnding
 	}) {
 		this.dropExtension = dropExtension;
 		this.rootDir = rootDir;
@@ -38,6 +40,8 @@ class DtsContent {
 		this.rawTokenList = rawTokenList;
 		this.resultList = resultList;
 		this.messageList = messageList;
+		this.lineIndent = lineIndent;
+		this.lineEnding = lineEnding;
 	}
 
 	get contents() {
@@ -70,13 +74,13 @@ class DtsContent {
 		return new Promise((resolve, reject) => {
 			let fileContent = [
 				'interface IStyles {',
-				"\t" + '[name: string]: string;'
+				this.lineIndent + '[name: string]: string' + this.lineEnding
 			];
 			fileContent = fileContent.concat(this.formatted);
 			fileContent = fileContent.concat([
 				'}',
-				'declare var styles: IStyles;',
-				'export = styles;'
+				'declare var styles: IStyles' + this.lineEnding,
+				'export = styles' + this.lineEnding
 			]);
 			fs.writeFile(this.outputFilePath, fileContent.join(os.EOL) + os.EOL, 'utf8', (err) => {
 				if(err) {
@@ -100,6 +104,8 @@ export class DtsCreator {
 		this.outputDirectory = path.join(this.rootDir, this.outDir);
 		this.camelCase = options.camelCase;
 		this.dropExtension = !!options.dropExtension;
+    this.lineIndent = options.useSpaces ? "  " : "\t"
+    this.lineEnding = options.noSemicolons ? '' : ';';
 	}
 
 	create(filePath, initialContents, clearCache = false) {
@@ -137,7 +143,7 @@ export class DtsCreator {
 						}
 					});
 
-					var result = validKeys.map(k => ("\t" + k + ': string;'));
+					var result = validKeys.map(k => (this.lineIndent + k + ': string' + this.lineEnding));
 
 					var content = new DtsContent({
 						dropExtension: this.dropExtension,
@@ -147,7 +153,9 @@ export class DtsCreator {
 						rInputPath,
 						rawTokenList: keys,
 						resultList: result,
-						messageList
+						messageList,
+            lineIndent: this.lineIndent,
+            lineEnding: this.lineEnding
 					});
 
 					resolve(content);

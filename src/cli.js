@@ -20,6 +20,8 @@ let yarg = yargs.usage('Create .css.d.ts from CSS modules *.css files.\nUsage: $
   .alias('p', 'pattern').describe('p', 'Glob pattern with css files')
   .alias('w', 'watch').describe('w', 'Watch input directory\'s css files or pattern').boolean('w')
   .alias('d', 'dropExtension').describe('d', 'Drop the input files extension').boolean('d')
+  .alias('s', 'useSpaces').describe('s', 'Use spaces rather than tabs for indents').boolean('s')
+  .alias('n', 'noSemicolons').describe('n', 'Don\'t add semicolons to generated lines').boolean('n')
   .alias('h', 'help').help('h')
   .version(() => require('../package.json').version)
 let argv = yarg.argv;
@@ -59,7 +61,9 @@ let main = () => {
     searchDir,
     outDir: argv.o,
     camelCase: argv.c,
-    dropExtension: argv.d
+    dropExtension: argv.d,
+    useSpaces: argv.s,
+    noSemicolons: argv.n
   });
 
   if(!argv.w) {
