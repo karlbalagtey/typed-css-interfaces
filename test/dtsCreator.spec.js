@@ -11,7 +11,7 @@ describe('DtsCreator', () => {
     it('returns DtsContent instance simple css', done => {
       creator.create('test/testStyle.css').then(content => {
         assert.equal(content.contents.length, 1);
-        assert.equal(content.contents[0], "export const myClass: string;")
+        assert.equal(content.contents[0], "myClass: string;")
         done();
       });
     });
@@ -26,21 +26,21 @@ describe('DtsCreator', () => {
     it('returns DtsContent instance from composing css', done => {
       creator.create('test/composer.css').then(content => {
         assert.equal(content.contents.length, 1);
-        assert.equal(content.contents[0], "export const root: string;")
+        assert.equal(content.contents[0], "root: string;")
         done();
       });
     })
     it('returns DtsContent instance from composing css whose has invalid import/composes', done => {
       creator.create('test/invalidComposer.scss').then(content => {
         assert.equal(content.contents.length, 1);
-        assert.equal(content.contents[0], "export const myClass: string;")
+        assert.equal(content.contents[0], "myClass: string;")
         done();
       });
     });
     it('returns DtsContent instance from the pair of path and contents', done => {
       creator.create('test/somePath', `.myClass { color: red }`).then(content => {
         assert.equal(content.contents.length, 1);
-        assert.equal(content.contents[0], "export const myClass: string;")
+        assert.equal(content.contents[0], "myClass: string;")
         done();
       });
     });
@@ -96,14 +96,14 @@ describe('DtsContent', () => {
   describe('#formatted', () => {
     it('returns formatted .d.ts string', done => {
       new DtsCreator().create('test/testStyle.css').then(content => {
-        assert.equal(content.formatted, "export const myClass: string;");
+        assert.equal(content.formatted, "myClass: string;");
         done();
       });
     });
 
     it('returns empty object exportion when the result list has no items', done => {
       new DtsCreator().create('test/empty.css').then(content => {
-        assert.equal(content.formatted, "export default {};");
+        assert.equal(content.formatted, "");
         done();
       });
     });
@@ -111,21 +111,21 @@ describe('DtsContent', () => {
     describe('#camelCase option', () => {
       it('camelCase == true: returns camelized tokens for lowercase classes', done => {
         new DtsCreator({camelCase: true}).create('test/kebabed.css').then(content => {
-          assert.equal(content.formatted, "export const myClass: string;");
+          assert.equal(content.formatted, "myClass: string;");
           done();
         });
       });
 
       it('camelCase == true: returns camelized tokens for uppercase classes ', done => {
         new DtsCreator({camelCase: true}).create('test/kebabedUpperCase.css').then(content => {
-          assert.equal(content.formatted, "export const myClass: string;");
+          assert.equal(content.formatted, "myClass: string;");
           done();
         });
       });
 
       it('camelCase == "dashes": returns camelized tokens for dashes only', done => {
         new DtsCreator({camelCase: 'dashes'}).create('test/kebabedUpperCase.css').then(content => {
-          assert.equal(content.formatted, "export const MyClass: string;");
+          assert.equal(content.formatted, "MyClass: string;");
           done();
         });
       });
