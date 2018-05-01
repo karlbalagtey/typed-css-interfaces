@@ -70,7 +70,7 @@ class DtsContent {
 		return new Promise((resolve, reject) => {
 			let fileContent = [
 				'interface IStyles {',
-				'[name:string]: string;'
+				"\t" + '[name: string]: string;'
 			];
 			fileContent = fileContent.concat(this.formatted);
 			fileContent = fileContent.concat([
@@ -137,7 +137,7 @@ export class DtsCreator {
 						}
 					});
 
-					var result = validKeys.map(k => (k + ': string;'));
+					var result = validKeys.map(k => ("\t" + k + ': string;'));
 
 					var content = new DtsContent({
 						dropExtension: this.dropExtension,
