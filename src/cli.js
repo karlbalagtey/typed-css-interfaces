@@ -22,6 +22,7 @@ let yarg = yargs.usage('Create .css.d.ts from CSS modules *.css files.\nUsage: $
   .alias('d', 'dropExtension').describe('d', 'Drop the input files extension').boolean('d')
   .alias('s', 'useSpaces').describe('s', 'Use spaces rather than tabs for indents').boolean('s')
   .alias('n', 'noSemicolons').describe('n', 'Don\'t add semicolons to generated lines').boolean('n')
+  .alias('v', 'verbose').describe('v', 'Verbose mode').boolean('v')
   .alias('h', 'help').help('h')
   .version(() => require('../package.json').version)
 let argv = yarg.argv;
@@ -32,9 +33,11 @@ function writeFile(f) {
   .then(content => content.writeFile())
   .then(content => {
     console.log('Wrote ' + chalk.green(content.outputFilePath));
-    content.messageList.forEach(message => {
-      console.warn(chalk.yellow('[Warn] ' + message));
-    });
+    if(argv.v) {
+      content.messageList.forEach(message => {
+        console.warn(chalk.yellow('[Warn] ' + message));
+      });
+    }
   })
   .catch(reason => console.error(chalk.red('[Error] ' + reason)));
 };
